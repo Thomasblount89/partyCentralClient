@@ -5,7 +5,7 @@
 
 //this would need to be a stateful component
 import {Component} from 'react';
-// import Login from './Auth/Login';
+import Login from './Auth/Login';
 import Signup from './Auth/Signup';
 
 
@@ -13,6 +13,8 @@ import Signup from './Auth/Signup';
       updateToken:(newToken:any) => void;
       clearToken:() => void;
       sessionToken: string|null;
+    //   sessionToken:string|null
+     
   }
 
 export default class NavDisplay extends Component<AcceptedProps, {}> {
@@ -23,13 +25,15 @@ export default class NavDisplay extends Component<AcceptedProps, {}> {
 
     render(){
         return(
+        
             <div className="NavDisplay">
-                {/* <Login updateToken={this.updateToken} logout={this.clearToken} token={this.state.sessionToken}/> */}
+                 <Login updateToken={this.props.
+                    updateToken} clearToken={this.props.clearToken} sessionToken={this.props.sessionToken} /> 
                 <Signup  updateToken={this.props.
                     updateToken} clearToken={this.props.clearToken} sessionToken={this.props.sessionToken} />
 
             </div>
-         
+        
         )
     }
 }
