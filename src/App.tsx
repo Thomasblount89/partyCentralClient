@@ -1,34 +1,31 @@
-import React from 'react';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import  Nav from './components/Nav/NavDisplay';
-import EventsCentral from './EventsCentral';
-import EventIndex from './components/Events/EventIndex';
+import  NavDisplay from './components/Nav/NavDisplay';
+import {Component} from 'react';
 
-type Props = {
-  props: string 
+// import EventsCentral from './EventsCentral';
+// import EventIndex from './components/Events/EventIndex';
+
+
+interface IState {
+  sessionToken: string|null;
+  updateToken:string;
+  clearToken:string;
+  NavDisplay:string;
+  EventsCentral:string;
+  EventIndex:string;
 }
 
-type State = {
-  sessionToken: string|null
-  updateToken:string|null
-  clearToken:string|null
-  Nav:string|null
-  EventsCentral:string|null
-  EventIndex:string|null
-}
-
-
-class App extends React.Component<Props, State> {
-  constructor(props: Props){
+class App extends Component<{}, IState> {
+  constructor(props: {}){
     super(props)
     this.state = {
       sessionToken:"",
       updateToken:"",
       clearToken:"",
-      Nav:"",
+      NavDisplay:"",
       EventsCentral:"",
-      EventIndex:""
+      EventIndex:"",
 
   }
   }
@@ -45,18 +42,21 @@ class App extends React.Component<Props, State> {
     }
   }
 
-  updateToken = (newToken: any) => {
+  updateToken = (newToken: string) => {
     console.log(newToken);
     localStorage.setItem('token', newToken);
     this.setState({sessionToken: newToken})
   }
 
+  // HAVE UPDATE TOKEN ACCEPT PROPS IN NAVBAR DISPLAY... do we need to add a function comp for the search to place the update token in
+  // how to pass props through a file to a child folder " login and signup"
+
   render(){
   return (
     <div className="App">
-      <Nav updateToken={this.updateToken} logout={this.clearToken} token={this.state.sessionToken}/>
-      <EventsCentral updateToken={this.updateToken} logout={this.clearToken} token={this.state.sessionToken} />
-      <EventIndex updateToken={this.updateToken} logout={this.clearToken} token={this.state.sessionToken} />
+       <NavDisplay updateToken={this.updateToken} clearToken={this.clearToken}sessionToken={this.state.sessionToken}/> 
+      {/* <EventsCentral updateToken={this.updateToken} logout={this.clearToken} token={this.state.sessionToken} />
+      <EventIndex updateToken={this.updateToken} logout={this.clearToken} token={this.state.sessionToken} />  */}
 
    
     </div>

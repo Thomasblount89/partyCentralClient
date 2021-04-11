@@ -1,3 +1,20 @@
-// Login logic
+import React from 'react';
+import NavDisplay from '../NavDisplay';
 
-// this will be functional component
+
+interface AcceptedProps{
+    updateToken:(newToken:string|null) => void;
+    logout:() => void;
+    token: string|null;
+}
+
+function Login = () => {
+
+    return (
+      <div>
+       
+      </div>
+    )
+   }
+    
+    export default Login;
