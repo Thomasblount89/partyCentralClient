@@ -7,7 +7,8 @@
  import CreateEvent from './CreateEvent'
  import EventUpdate from './EventUpdate'
  import EventDelete from './EventDelete'
-// import RsvpIndex from './RsvpIndex';
+import RsvpCreate from '../RsvpIndex/RsvpCreate';
+import RsvpUpdate from '../RsvpIndex/RsvpUpdate';
 
  interface AcceptedProps{
   updateToken:(newToken:any) => void;
@@ -79,6 +80,11 @@ handleSubmit(e: SyntheticEvent): void {
                     updateToken} clearToken={this.props.clearToken} sessionToken={this.props.sessionToken} /> 
                      <EventDelete updateToken={this.props.
                     updateToken} clearToken={this.props.clearToken} sessionToken={this.props.sessionToken} />
+                    <RsvpCreate updateToken={this.props.
+                    updateToken} clearToken={this.props.clearToken} sessionToken={this.props.sessionToken} />
+                      <RsvpUpdate updateToken={this.props.
+                    updateToken} clearToken={this.props.clearToken} sessionToken={this.props.sessionToken} />
+                    
             </div>
         )
     }

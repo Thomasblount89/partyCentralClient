@@ -9,14 +9,10 @@ interface AcceptedProps{
    interface Rsvp {
     dish:string;
     rsvp:string;
-    hostId:string;
-
-
-    
+    hostId:string; 
 }
 
-
-   class RsvpCreate extends Component<AcceptedProps, Rsvp, {}> {
+   class RsvpUpdate extends Component<AcceptedProps, Rsvp, {}> {
     constructor(props:AcceptedProps){
       super(props);
       this.state = {
@@ -29,9 +25,9 @@ interface AcceptedProps{
 
 handleSubmit(e: SyntheticEvent): void {
     e.preventDefault();
-    
-          //create rsvp
-          let url: string = "http://localhost:6000/rsvp/creatersvp"; 
+
+          //RSVP Update
+          let url: string = "http://localhost:6000/rsvp/edit/:id"; // add the interperlation of the id #?
           let reqBody = {
             Rsvp: {
                 Dish: this.state.dish,
@@ -63,4 +59,4 @@ handleSubmit(e: SyntheticEvent): void {
         }
       }
 
-          export default RsvpCreate;
+          export default RsvpUpdate;
