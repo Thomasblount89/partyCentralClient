@@ -4,7 +4,7 @@ import  NavDisplay from './components/Nav/NavDisplay';
 import {Component} from 'react';
 
 // import EventsCentral from './EventsCentral';
-// import EventIndex from './components/Events/EventIndex';
+import EventIndex from './components/Events/EventsIndex/EventIndex';
 
 
 interface IState {
@@ -48,15 +48,13 @@ class App extends Component<{}, IState> {
     this.setState({sessionToken: newToken})
   }
 
-  // HAVE UPDATE TOKEN ACCEPT PROPS IN NAVBAR DISPLAY... do we need to add a function comp for the search to place the update token in
-  // how to pass props through a file to a child folder " login and signup"
 
   render(){
   return (
     <div className="App">
        <NavDisplay updateToken={this.updateToken} clearToken={this.clearToken}sessionToken={this.state.sessionToken}/> 
-      {/* <EventsCentral updateToken={this.updateToken} logout={this.clearToken} token={this.state.sessionToken} />
-      <EventIndex updateToken={this.updateToken} logout={this.clearToken} token={this.state.sessionToken} />  */}
+      {/* {/* <EventsCentral updateToken={this.updateToken} logout={this.clearToken} token={this.state.sessionToken} /> */}
+      <EventIndex updateToken={this.updateToken} clearToken={this.clearToken}sessionToken={this.state.sessionToken} />  
 
    
     </div>
