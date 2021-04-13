@@ -27,7 +27,7 @@ class Login extends Component<AcceptedProps, user, {}> {
 
   handleSubmit(e: SyntheticEvent): void {
     e.preventDefault();
-    let url: string = "http://localhost:6000/user/login";
+    let url: string = "http://localhost:4001/user/login";
     let reqBody = {
       user: {
         email: this.state.email,

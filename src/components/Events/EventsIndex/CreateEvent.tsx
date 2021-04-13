@@ -33,7 +33,7 @@ interface AcceptedProps{
 handleSubmit(e: SyntheticEvent): void {
     e.preventDefault();
           //create event
-          let url: string = "http://localhost:6000/events/createevent"; 
+          let url: string = "http://localhost:4001/events/createevent"; 
           let reqBody = {
             events: {
               eventTitle:this.state.eventTitle,

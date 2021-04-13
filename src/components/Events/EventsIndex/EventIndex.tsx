@@ -43,7 +43,7 @@ import RsvpUpdate from '../RsvpIndex/RsvpUpdate';
 handleSubmit(e: SyntheticEvent): void {
     e.preventDefault();
     // get all by host id?
-    let url: string = "http://localhost:6000/events/:hostId"; //userId instead of a HostId maybe? OR serach by name to grab there events 
+    let url: string = "http://localhost:4001/events/:hostId"; //userId instead of a HostId maybe? OR search by name to grab there events 
     let reqBody = {
       events: {
         id: this.state.id,

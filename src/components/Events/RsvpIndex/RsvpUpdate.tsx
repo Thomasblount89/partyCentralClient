@@ -27,7 +27,7 @@ handleSubmit(e: SyntheticEvent): void {
     e.preventDefault();
 
           //RSVP Update
-          let url: string = "http://localhost:6000/rsvp/edit/:id"; // add the interperlation of the id #?
+          let url: string = "http://localhost:4001/rsvp/edit/:id"; // add the interperlation of the id #?
           let reqBody = {
             Rsvp: {
                 Dish: this.state.dish,
