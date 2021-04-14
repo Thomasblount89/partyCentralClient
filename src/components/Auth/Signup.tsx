@@ -4,6 +4,7 @@
 import { SyntheticEvent, Component } from "react";
 import { isConstructorDeclaration } from "typescript";
 import SignupDisplay from './SignupDisplay';
+import { Redirect } from 'react-router-dom'
 
 
 interface AcceptedProps {
@@ -18,8 +19,7 @@ interface user {
   lastName: string;
   email: string;
   password: string;
-  role: boolean;
-
+  redirect: string|null; 
 }
 
 class Signup extends Component<AcceptedProps, user> {
@@ -30,7 +30,7 @@ class Signup extends Component<AcceptedProps, user> {
       lastName: "",
       email: "",
       password: "",
-      role: false
+      redirect: null
     };
     //this.handleSubmit = this.handleSubmit.bind(this);
     // this.handleChange = this.handleChange.bind(this);
@@ -47,7 +47,6 @@ class Signup extends Component<AcceptedProps, user> {
         lastName: this.state.lastName,
         email: this.state.email,
         password: this.state.password,
-        role: false 
       }),
       headers: new Headers({
         "Content-type": "application/json",
@@ -55,9 +54,8 @@ class Signup extends Component<AcceptedProps, user> {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json)
-        console.log(json.sessionToken)
-        this.props.updateToken(json.sessionToken)
+        this.props.updateToken(json.token)
+        this.setState({redirect:"/event"})
          
       });
   }
@@ -75,28 +73,24 @@ class Signup extends Component<AcceptedProps, user> {
   // }
 
   firstnameChange(e: any) {
-    console.log(e);
     this.setState({
       firstName: e.target.value
     })
   }
 
   lastnameChange(e: any) {
-    console.log(e);
     this.setState({
       lastName: e.target.value
     })
   }
 
   emailChange(e: any){
-    console.log(e);
     this.setState({
       email: e.target.value
     })
   }
 
   passwordChange(e:any) {
-    console.log(e);
     this.setState({
       password: e.target.value
     })
@@ -105,6 +99,9 @@ class Signup extends Component<AcceptedProps, user> {
 
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />
+    }
     return (
       <div>
         <SignupDisplay

@@ -1,6 +1,5 @@
 import { Component, SyntheticEvent } from "react";
 
-
 interface AcceptedProps {
   updateToken: (newToken: any) => void;
   clearToken: () => void;
@@ -15,14 +14,13 @@ interface iUser {
   key: number | null;
 }
 
-class RsvpIndex extends Component<AcceptedProps, any> {
+class Admin extends Component<AcceptedProps, any> {
   constructor(props: AcceptedProps) {
     super(props);
     this.state = {
       users: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount(): void {
@@ -60,18 +58,12 @@ class RsvpIndex extends Component<AcceptedProps, any> {
       });
   }
 
-  handleChange(e: SyntheticEvent) {
-    const input = e.target as HTMLInputElement;
-  }
-
   render() {
     return (
-      <div className="EventIndex">
-        <h1>Hello world</h1>
+      <div className="Admin">
 
         <select onChange={this.handleSubmit}>
           {this.state.users.map((user: any) => (
-        
             <option key={user} value={user.id}>
               {user.firstName}
             </option>
@@ -81,8 +73,9 @@ class RsvpIndex extends Component<AcceptedProps, any> {
         <h1 onClick={this.handleSubmit}>Events</h1>
         <button type="submit">Events</button>
       </div>
+
+      
     );
   }
 }
-
-export default RsvpIndex;
+export default Admin;

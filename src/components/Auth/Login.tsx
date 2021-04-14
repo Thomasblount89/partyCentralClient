@@ -1,4 +1,5 @@
 import { SyntheticEvent, Component } from "react";
+import { Redirect } from 'react-router-dom'
 
 
 interface AcceptedProps {
@@ -8,9 +9,10 @@ interface AcceptedProps {
 
 }
 interface user {
-
   email: string;
   password: string;
+  redirect: string|null; 
+
 }
 
 class Login extends Component<AcceptedProps, user, {}> {
@@ -20,6 +22,7 @@ class Login extends Component<AcceptedProps, user, {}> {
  
       email: "",
       password: "",
+      redirect: null 
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -29,10 +32,10 @@ class Login extends Component<AcceptedProps, user, {}> {
     e.preventDefault();
     let url: string = "http://localhost:4001/user/login";
     let reqBody = {
-      user: {
+
         email: this.state.email,
         password: this.state.password,
-      },
+      
     };
 
     fetch(url, {
@@ -44,14 +47,14 @@ class Login extends Component<AcceptedProps, user, {}> {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
-        this.props.updateToken(json.sessionToken);
+        this.props.updateToken(json.token);
+        this.setState({redirect: "/event"})
+
       });
   }
 
   handleChange(e: SyntheticEvent) {
     const input = e.target as HTMLInputElement;
-    console.log(input.name, input.value);
     this.setState((prevState: user) => {
       let pick: Pick<user, keyof user> = {
         ...prevState,
@@ -62,6 +65,9 @@ class Login extends Component<AcceptedProps, user, {}> {
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />
+    }
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
