@@ -1,4 +1,5 @@
 import { Component, SyntheticEvent } from "react";
+import APIURL from '../../helper/environment';
 
 interface AcceptedProps {
   updateToken: (newToken: any) => void;
@@ -25,7 +26,7 @@ class Admin extends Component<AcceptedProps, any> {
 
   componentDidMount(): void {
     // get all users
-    let allUsers: string = "http://localhost:4001/user/";
+    let allUsers: string = `${APIURL}/user/`;
 
     fetch(allUsers, {
       method: "GET",
@@ -44,7 +45,7 @@ class Admin extends Component<AcceptedProps, any> {
     e.preventDefault();
 
     // get all by host id?
-    let allHostsEvents: string = "http://localhost:4001/events/:hostId"; 
+    let allHostsEvents: string = `${APIURL}/events/:hostId`; 
 
     fetch(allHostsEvents, {
       method: "GET",

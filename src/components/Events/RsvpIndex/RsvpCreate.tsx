@@ -1,4 +1,5 @@
 import {Component, SyntheticEvent} from 'react';
+import APIURL from '../../../helper/environment';
 
 interface AcceptedProps{
     updateToken:(newToken:any) => void;
@@ -31,7 +32,7 @@ handleSubmit(e: SyntheticEvent): void {
     e.preventDefault();
     
           //create rsvp
-          let url: string = "http://localhost:4001/rsvp/creatersvp"; 
+          let url: string = `${APIURL}/rsvp/creatersvp`; 
           let reqBody = {
             Rsvp: {
                 Dish: this.state.dish,

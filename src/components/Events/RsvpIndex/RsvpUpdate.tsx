@@ -1,4 +1,5 @@
 import {Component, SyntheticEvent} from 'react';
+import APIURL from '../../../helper/environment';
 
 interface AcceptedProps{
     updateToken:(newToken:any) => void;
@@ -27,7 +28,7 @@ handleSubmit(e: SyntheticEvent): void {
     e.preventDefault();
 
           //RSVP Update
-          let url: string = "http://localhost:4001/rsvp/edit/:id"; // add the interperlation of the id #?
+          let url: string = `${APIURL}/rsvp/edit/:id`; // add the interperlation of the id #?
           let reqBody = {
             Rsvp: {
                 Dish: this.state.dish,

@@ -5,6 +5,7 @@ import { SyntheticEvent, Component } from "react";
 import { isConstructorDeclaration } from "typescript";
 import SignupDisplay from './SignupDisplay';
 import { Redirect } from 'react-router-dom'
+import APIURL from '../../helper/environment';
 
 
 interface AcceptedProps {
@@ -40,7 +41,7 @@ class Signup extends Component<AcceptedProps, user> {
     e.preventDefault();
 
 
-    fetch("http://localhost:4001/user/register", {
+    fetch( `${APIURL}/user/register`, {
       method: "POST",
       body: JSON.stringify({
         firstName: this.state.firstName,

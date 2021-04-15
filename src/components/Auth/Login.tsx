@@ -1,5 +1,6 @@
 import { SyntheticEvent, Component } from "react";
 import { Redirect } from 'react-router-dom'
+import APIURL from '../../helper/environment';
 
 
 interface AcceptedProps {
@@ -30,7 +31,7 @@ class Login extends Component<AcceptedProps, user, {}> {
 
   handleSubmit(e: SyntheticEvent): void {
     e.preventDefault();
-    let url: string = "http://localhost:4001/user/login";
+    let url: string = `${APIURL}/user/login`;
     let reqBody = {
 
         email: this.state.email,

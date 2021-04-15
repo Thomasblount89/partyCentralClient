@@ -4,6 +4,7 @@
 
 import { Component, SyntheticEvent } from "react";
 import MaterialTable from "material-table";
+import APIURL from '../../../helper/environment';
 
 interface AcceptedProps {
   updateToken: (newToken: any) => void;
@@ -40,7 +41,7 @@ class EventIndex extends Component<AcceptedProps, any> {
 
   componentDidMount(): void {
     // get all events
-    let allEvents: string = "http://localhost:4001/events/";
+    let allEvents: string = `${APIURL}/events/`;
 
     fetch(allEvents, {
       method: "GET",

@@ -1,4 +1,5 @@
 import {Component, SyntheticEvent} from 'react';
+import APIURL from '../../../helper/environment';
 
 interface AcceptedProps{
     updateToken:(newToken:any) => void;
@@ -33,7 +34,7 @@ interface AcceptedProps{
 handleSubmit(e: SyntheticEvent): void {
     e.preventDefault();
           //create event
-          let url: string = "http://localhost:4001/events/createevent"; 
+          let url: string = `${APIURL}/events/createevent`; 
           let reqBody = {
             events: {
               eventTitle:this.state.eventTitle,
