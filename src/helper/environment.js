@@ -6,7 +6,7 @@ switch (window.location.hostname) {
         APIURL = 'http://localhost:4001';
         break;
     case 'partycentralclient.herokuapp.com':
-        APIURL = 'https://partycentralclient.herokuapp.com'
+        APIURL = 'https://tmb-partycentralserver.herokuapp.com'
 }
 
 export default APIURL;
