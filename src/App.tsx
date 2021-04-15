@@ -9,7 +9,7 @@ import User from "./components/Admin/Admin";
 import Rsvp from "./components/Events/RsvpIndex/RsvpIndex";
 
 interface IState {
-  sessionToken: string | null;
+  sessionToken: string| any;
   updateToken: string;
   clearToken: string;
   NavDisplay: string;

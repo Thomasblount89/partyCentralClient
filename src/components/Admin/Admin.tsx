@@ -61,7 +61,7 @@ class Admin extends Component<AcceptedProps, any> {
   render() {
     return (
       <div className="Admin">
-
+ <h1>Admin Component</h1>
         <select onChange={this.handleSubmit}>
           {this.state.users.map((user: any) => (
             <option key={user} value={user.id}>
@@ -70,8 +70,8 @@ class Admin extends Component<AcceptedProps, any> {
           ))}
         </select>
 
-        <h1 onClick={this.handleSubmit}>Events</h1>
-        <button type="submit">Events</button>
+        <h1 onClick={this.handleSubmit}></h1>
+        <button type="submit">Users</button>
       </div>
 
       

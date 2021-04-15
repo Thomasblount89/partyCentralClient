@@ -4,7 +4,7 @@ import { Component, SyntheticEvent } from "react";
 interface AcceptedProps {
   updateToken: (newToken: any) => void;
   clearToken: () => void;
-  sessionToken: string | null;
+  sessionToken: string;
 }
 
 interface iUser {
@@ -27,12 +27,13 @@ class RsvpIndex extends Component<AcceptedProps, any> {
 
   componentDidMount(): void {
     // get all users
-    let allUsers: string = "http://localhost:4001/user/";
+    let allUsers: string = "http://localhost:4001/events/";
 
     fetch(allUsers, {
       method: "GET",
       headers: new Headers({
         "Content-type": "application/json",
+        Authorization: this.props.sessionToken,
       }),
     })
       .then((res) => res.json())
@@ -66,8 +67,8 @@ class RsvpIndex extends Component<AcceptedProps, any> {
 
   render() {
     return (
-      <div className="EventIndex">
-        <h1>Hello world</h1>
+      <div className="RsvpIndex">
+    <h1>Rsvp Component</h1>
 
         <select onChange={this.handleSubmit}>
           {this.state.users.map((user: any) => (
@@ -78,8 +79,8 @@ class RsvpIndex extends Component<AcceptedProps, any> {
           ))}
         </select>
 
-        <h1 onClick={this.handleSubmit}>Events</h1>
-        <button type="submit">Events</button>
+        <h1 onClick={this.handleSubmit}></h1>
+        <button type="submit">Rsvp</button>
       </div>
     );
   }

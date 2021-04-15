@@ -3,12 +3,12 @@
 //display
 
 import { Component, SyntheticEvent } from "react";
-
+import MaterialTable from "material-table";
 
 interface AcceptedProps {
   updateToken: (newToken: any) => void;
   clearToken: () => void;
-  sessionToken: string | null;
+  sessionToken: string;
 }
 
 interface iUser {
@@ -24,66 +24,57 @@ class EventIndex extends Component<AcceptedProps, any> {
     super(props);
     this.state = {
       users: [],
+      columns: [
+        { title: "Host First Name", field: "user.firstName" },
+        { title: "Host Last Name", field: "user.lastName" },
+        { title: "Event Title", field: "eventTitle" },
+        { title: "Event Time", field: "eventTime" },
+        { title: "Event Date", field: "eventDate" },
+        { title: "Event Location", field: "eventLocation" },
+      
+      ], 
+      eventTableData:[],
+
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount(): void {
-    // get all users
-    let allUsers: string = "http://localhost:4001/user/";
+    // get all events
+    let allEvents: string = "http://localhost:4001/events/";
 
-    fetch(allUsers, {
+    fetch(allEvents, {
       method: "GET",
       headers: new Headers({
         "Content-type": "application/json",
+        Authorization: this.props.sessionToken,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        this.setState({ users: data.user });
+        this.setState({ eventTableData: (data.events)});
         console.log(this.state);
       });
-  }
-
-  handleSubmit(e: SyntheticEvent): void {
-    e.preventDefault();
-
-    // get all by host id?
-    let allHostsEvents: string = "http://localhost:4001/events/:hostId"; 
-
-    fetch(allHostsEvents, {
-      method: "GET",
-      headers: new Headers({
-        "Content-type": "application/json",
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        this.props.updateToken(json.token);
-      });
-  }
-
-  handleChange(e: SyntheticEvent) {
-    const input = e.target as HTMLInputElement;
   }
 
   render() {
     return (
       <div className="EventIndex">
-        <h1>Hello world</h1>
+        <h1>Event Component</h1>
 
-        <select onChange={this.handleSubmit}>
+        {/* <select onChange={this.handleSubmit}>
           {this.state.users.map((user: any) => (
-        
             <option key={user} value={user.id}>
               {user.firstName}
             </option>
           ))}
-        </select>
+        </select> */}
 
-        <h1 onClick={this.handleSubmit}>Events</h1>
-        <button type="submit">Events</button>
+            <MaterialTable
+            title="Events"
+            data={this.state.eventTableData}
+            columns={this.state.columns}
+            />
+
       </div>
     );
   }

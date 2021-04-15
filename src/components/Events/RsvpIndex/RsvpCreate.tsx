@@ -3,7 +3,7 @@ import {Component, SyntheticEvent} from 'react';
 interface AcceptedProps{
     updateToken:(newToken:any) => void;
     clearToken:() => void;
-    sessionToken: string|null;
+    sessionToken: string;
    }
 
    interface Rsvp {
@@ -45,6 +45,7 @@ handleSubmit(e: SyntheticEvent): void {
               body: JSON.stringify(reqBody),
               headers: new Headers({
                 "Content-type": "application/json",
+                Authorization: this.props.sessionToken,
               }),
             })
               .then((res) => res.json())
