@@ -41,7 +41,7 @@ class Signup extends Component<AcceptedProps, user> {
     e.preventDefault();
 
 
-    fetch( `${APIURL}/user/register`, {
+    fetch(`${APIURL}/user/register`, {
       method: "POST",
       body: JSON.stringify({
         firstName: this.state.firstName,
