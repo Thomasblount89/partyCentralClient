@@ -10,9 +10,9 @@ import Rsvp from "./components/Events/RsvpIndex/RsvpIndex";
 
 interface IState {
   sessionToken: string| any;
-  updateToken: string;
-  clearToken: string;
-  eventDetail: [];
+  updateToken: string | any;
+  clearToken: string| any;
+  eventDetail: {}| any;
   
   // NavDisplay: string;
   // Auth: string;
@@ -33,7 +33,7 @@ class App extends Component<{}, IState> {
       sessionToken: "",
       updateToken: "",
       clearToken: "",
-      eventDetail:[]
+      eventDetail:{}
       
       // NavDisplay: "",
       // Auth: "",

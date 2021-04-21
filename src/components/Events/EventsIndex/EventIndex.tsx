@@ -13,18 +13,18 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { Button, Modal } from "react-bootstrap";
 
 interface AcceptedProps {
-  updateToken: (newToken: any) => void;
-  clearToken: () => void;
-  sessionToken: string;
-  eventDetail: eventDetails[];
+  updateToken: (newToken: any) => void| any;
+  clearToken: () => void | any;
+  sessionToken: string | any;
+  eventDetail: {} | any;
 }
 
-interface eventDetails {
-  eventTitle: any;
-  eventTime: any;
-  eventDate: any;
-  eventLocation: any;
-}
+// interface eventDetail {
+//   eventTitle: any;
+//   eventTime: any;
+//   eventDate: any;
+//   eventLocation: any;
+// }
 
 class EventIndex extends Component<AcceptedProps, any> {
   constructor(props: AcceptedProps) {
@@ -32,7 +32,7 @@ class EventIndex extends Component<AcceptedProps, any> {
     this.state = {
       users: [],
       isOpen: false,
-      eventDetail: [],
+      eventDetail: {},
       columns: [
         { title: "Host First Name", field: "user.firstName" },
         { title: "Host Last Name", field: "user.lastName" },
@@ -46,7 +46,10 @@ class EventIndex extends Component<AcceptedProps, any> {
           editable: false,
           render: (rowData: any) =>
             rowData && (
-              <IconButton color="primary" onClick={this.openModal.bind(this)}>
+              <IconButton
+                color="primary"
+                onClick={this.openModal.bind(this, rowData)}
+              >
                 <EditIcon />
               </IconButton>
             ),
@@ -104,18 +107,43 @@ class EventIndex extends Component<AcceptedProps, any> {
       });
   }
 
+  //OPTION 1 TO CONSOLE.LOG ROWDATA
+  // openModal = (rowData:any) => this.setState({
+  //   isOpen: true,
+  //   eventDetail: rowData,
 
-  //CHANGED LINE 111- REMOVED AN "S"
-  openModal = (rowData:any) => this.setState({ 
-    isOpen: true,
-    eventDetail: rowData,
-   });
-  // openModal() {
-  //   this.setState<any>({ isOpen: true });
-  //   // console.log(this.state.isOpen);
+  //  });
+
+  // OPTION 2 TO CONSOLE.LOG ROWDATA
+  async openModal(rowData: any) {
+    await this.setState({
+      eventDetail: rowData,
+      isOpen: true,
+  
+    });
+  
+    // console.log(rowData);
+    console.log(this.state.eventDetail);
+    
+
+  // .then((rowData:any) => this.setState({
+  //  eventDetail:rowData}))
+  //  .then(() => this.setState ({
+  //    isOpen:true,
+  //  }))
   // }
 
-  
+  }
+
+  //  openModal = async (params:any) => {
+  //    console.log(rowData)
+
+  // .then((rowData:any) => this.setState({
+  //  eventDetail:rowData}))
+  //  .then(() => this.setState ({
+  //    isOpen:true,
+  //  }))
+  // }
 
   closeModal = () => this.setState({ isOpen: false });
 
@@ -130,7 +158,7 @@ class EventIndex extends Component<AcceptedProps, any> {
               updateToken={this.state.updateToken}
               clearToken={this.state.clearToken}
               sessionToken={this.state.sessionToken}
-              changeOfEvents={this.state.eventDetail}
+              eventDetail={this.state.eventDetail}
             />
           </Modal.Body>
           <Modal.Footer>

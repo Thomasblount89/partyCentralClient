@@ -4,10 +4,10 @@ import Modal from '@material-ui/core/Modal';
 
 
 interface AcceptedProps{
-    updateToken:(newToken:any) => void;
-    clearToken:() => void;
-    sessionToken: string;
-    changeOfEvents:[];
+    updateToken:(newToken:any) => void | any;
+    clearToken:() => void | any;
+    sessionToken: string | any ;
+    eventDetail:{} | any;
    }
   
 
@@ -27,7 +27,6 @@ interface AcceptedProps{
         editEventTime:"",
         editEventDate: "",
         editEventLocation:"",
-        changeOfEvents:[]
     
       };
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,7 +38,7 @@ handleSubmit(e: SyntheticEvent): void {
           let url: string = `${APIURL}/events/edit/:id`; // add the interperlation of the id #?
           // let reqBody = {
           //   events: {
-          //     eventTitle:this.state.eventTitle,
+          //     eventTitle:this.state.editEventTitle,
           //     eventTime:this.state.eventTime,
           //     eventDate:this.state.eventDate,
           //     eventLocation:this.state.eventLocation,
@@ -58,18 +57,21 @@ handleSubmit(e: SyntheticEvent): void {
               .then((res) => res.json())
               .then((json) => {
                 console.log(json);
-                this.props.updateToken(json.sessionToken);
+                this.props.sessionToken(json.sessionToken);
+                console.log(this.props.sessionToken)
               });
           }
 
-          pushMe() {
-            console.log(this.props.changeOfEvents)
+          pushMe = () => {
+            console.log(this.props.eventDetail)
           }
 
           render(){
             return(
                 <div>
+                  {/* Put modal here */}
                     <button onClick={this.pushMe}> test</button>
+                    {console.log(this.props.eventDetail)}
                     
                 </div>
             )
