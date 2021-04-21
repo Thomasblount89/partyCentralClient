@@ -56,7 +56,7 @@ const NavDisplay = () => {
             <Link className={classes.linkText} to="/">Login{" "}</Link>
             {/* { this.props.sessionToken !== null ? <link> ? }:{} */}
 
-            <Link className={classes.linkText} to="/event">Event{" "}</Link>
+            <Link className={classes.linkText} to="/events">Event{" "}</Link>
             <Link className={classes.linkText} to="/user">User{" "}</Link>
             <Link className={classes.linkText} to="/rsvp">Rsvp{" "}</Link>
 

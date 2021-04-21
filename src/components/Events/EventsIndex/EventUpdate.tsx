@@ -1,28 +1,33 @@
 import {Component, SyntheticEvent} from 'react';
 import APIURL from '../../../helper/environment';
+import Modal from '@material-ui/core/Modal';
+
 
 interface AcceptedProps{
     updateToken:(newToken:any) => void;
     clearToken:() => void;
     sessionToken: string;
+    changeOfEvents:[];
    }
+  
 
-   interface events {
-    eventTitle:string;
-    eventTime:string;
-    eventDate: string;
-    eventLocation:string
-}
+//    interface events {
+//     eventTitle:string;
+//     eventTime:string;
+//     eventDate: string;
+//     eventLocation:string
+// }
 
 
-   class EventUpdate extends Component<AcceptedProps, events, {}> {
+   class EventUpdate extends Component<AcceptedProps, {}> {
     constructor(props:AcceptedProps){
       super(props);
       this.state = {
-        eventTitle:"",
-        eventTime:"",
-        eventDate: "",
-        eventLocation:"",
+        editEventTitle:"",
+        editEventTime:"",
+        editEventDate: "",
+        editEventLocation:"",
+        changeOfEvents:[]
     
       };
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,19 +37,19 @@ handleSubmit(e: SyntheticEvent): void {
     e.preventDefault();
           //create event
           let url: string = `${APIURL}/events/edit/:id`; // add the interperlation of the id #?
-          let reqBody = {
-            events: {
-              eventTitle:this.state.eventTitle,
-              eventTime:this.state.eventTime,
-              eventDate:this.state.eventDate,
-              eventLocation:this.state.eventLocation,
+          // let reqBody = {
+          //   events: {
+          //     eventTitle:this.state.eventTitle,
+          //     eventTime:this.state.eventTime,
+          //     eventDate:this.state.eventDate,
+          //     eventLocation:this.state.eventLocation,
            
-            },
-          };
+          //   },
+          // };
       
           fetch(url, {
               method: "PUT",
-              body: JSON.stringify(reqBody),
+              // body: JSON.stringify(reqBody),
               headers: new Headers({
                 "Content-type": "application/json",
                 Authorization: this.props.sessionToken,
@@ -57,9 +62,14 @@ handleSubmit(e: SyntheticEvent): void {
               });
           }
 
+          pushMe() {
+            console.log(this.props.changeOfEvents)
+          }
+
           render(){
             return(
                 <div>
+                    <button onClick={this.pushMe}> test</button>
                     
                 </div>
             )
@@ -67,3 +77,27 @@ handleSubmit(e: SyntheticEvent): void {
       }
 
           export default EventUpdate;
+
+           // componentDidUpdate(): void {
+  //   let editedEvent: string =`${APIURL}/events/edit/:id`; 
+
+  //   fetch (editedEvent, {
+  //     method: "PUT",
+      // body: JSON.stringify({
+      //   eventTitle:this.state.columns.field,
+      //   eventTime:this.state.columns.field,
+      //   eventDate:this.state.columns.field,
+      //   eventLocation: this.state.columns.field
+  //     }),
+  //     headers: new Headers({
+  //       "Content-type": "application/json",
+  //       Authorization: this.props.sessionToken,
+
+  //     })
+  //   })
+  //   .then ((res) => res.json())
+  //   .then ((data) => {
+  //     this.setState({eventTableData:data.events})
+  //     console.log(this.state);
+  //   })
+  // }

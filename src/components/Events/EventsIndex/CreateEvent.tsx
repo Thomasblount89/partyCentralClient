@@ -57,6 +57,7 @@ handleSubmit(e: SyntheticEvent): void {
               .then((json) => {
                 console.log(json);
                 this.props.updateToken(json.sessionToken);
+                //getEvent(); 
               });
           }
 
