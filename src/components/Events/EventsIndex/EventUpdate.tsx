@@ -35,13 +35,13 @@ class EventUpdate extends Component<AcceptedProps, any> {
 
     if (this.props.action === "add") {
       console.log("going to the handleAdd");
-      this.handleAdd(event);
+      this.handleAdd();
     } else if (this.props.action === "edit") {
       console.log("going to the handleEdit");
-      this.handleEdit(event);
+      this.handleEdit();
     } else if (this.props.action === "delete") {
       console.log("going to the handleDelete");
-      this.handleDelete(event);
+      this.handleDelete();
     } else {
       console.log("can't determine where to go, so just close the modal");
       window.alert("Unable to submit your form. Closing modal, please try again.");
@@ -49,11 +49,32 @@ class EventUpdate extends Component<AcceptedProps, any> {
     }
   };
 
-  handleAdd = (event: any) => {
-    //logic to add event
+  handleAdd = () => {
+    let url: string = `${APIURL}/events/createevent`;
+    let reqBody = {
+      eventTitle: this.state.eventTitle,
+      eventTime: this.state.eventTime,
+      eventDate: this.state.eventDate,
+      eventLocation: this.state.eventLocation,
+      hostId: localStorage.getItem('userId'),
+    };
+ 
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(reqBody),
+      headers: new Headers({
+        "Content-type": "application/json",
+        Authorization: this.props.sessionToken,
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        this.props.closeModal();
+      });
   }
 
-  handleEdit = (event: any) => {
+  handleEdit = () => {
    let url: string = `${APIURL}/events/edit/${this.props.eventDetail.id}`;
    let reqBody = {
      eventTitle: this.state.eventTitle,
@@ -77,8 +98,21 @@ class EventUpdate extends Component<AcceptedProps, any> {
      });
   }
 
-  handleDelete = (event: any) => {
-    //logic to delete event
+  handleDelete = () => {
+    let url: string = `${APIURL}/events/delete/id/${this.props.eventDetail.id}`;
+ 
+    fetch(url, {
+      method: "DELETE",
+      headers: new Headers({
+        "Content-type": "application/json",
+        Authorization: this.props.sessionToken,
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        this.props.closeModal();
+      });
   }
 
   renderNames() {
