@@ -151,7 +151,7 @@ class EventIndex extends Component<AcceptedProps, any> {
     return (
       <div className="EventIndex">
         <Modal show={this.state.isOpen} onHide={this.closeModal}>
-          <Modal.Header closeButton>Modal heading</Modal.Header>
+          <Modal.Header closeButton>Edit Your Event!</Modal.Header>
           {/* <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body> */}
           <Modal.Body>
             <EventUpdate
