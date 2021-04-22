@@ -1,7 +1,5 @@
 import { Component, SyntheticEvent } from "react";
 import APIURL from "../../../helper/environment";
-import Modal from "@material-ui/core/Modal";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 
 interface AcceptedProps {
@@ -9,6 +7,8 @@ interface AcceptedProps {
   clearToken: () => void | any;
   sessionToken: string | any;
   eventDetail: {} | any;
+  closeModal: () => any;
+  action: string|any;
 }
 
 //    interface events {
@@ -22,81 +22,121 @@ class EventUpdate extends Component<AcceptedProps, any> {
   constructor(props: AcceptedProps) {
     super(props);
     this.state = {
-      eventTitle: "",
-      eventTime: "",
-      eventDate: "",
-      eventLocation: ""
+      eventTitle: this.props.eventDetail.eventTitle,
+      eventTime: this.props.eventDetail.eventTime,
+      eventDate: this.props.eventDetail.eventDate,
+      eventLocation: this.props.eventDetail.eventLocation,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange = (event:any) => {
-    console.log(event)
   }
 
   handleSubmit = (event: any) => {
     event.preventDefault();
-    //event edit
-    let url: string = `${APIURL}/events/edit/${this.props.eventDetail.id}`; 
-    let reqBody = {
-        eventTitle:this.props.eventDetail.eventTitle,
-        eventTime:this.props.eventDetail.eventTime,
-        eventDate:this.props.eventDetail.eventDate,
-        eventLocation:this.props.eventDetail.eventLocation,
-    };
 
-    fetch(url, {
-      method: "PUT",
-      body: JSON.stringify(reqBody),
-      headers: new Headers({
-        "Content-type": "application/json",
-        Authorization: this.props.sessionToken,
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-        this.props.sessionToken(json.sessionToken);
-        console.log(this.props.sessionToken);
-      });
+    if (this.props.action === "add") {
+      console.log("going to the handleAdd");
+      this.handleAdd(event);
+    } else if (this.props.action === "edit") {
+      console.log("going to the handleEdit");
+      this.handleEdit(event);
+    } else if (this.props.action === "delete") {
+      console.log("going to the handleDelete");
+      this.handleDelete(event);
+    } else {
+      console.log("can't determine where to go, so just close the modal");
+      window.alert("Unable to submit your form. Closing modal, please try again.");
+      this.props.closeModal();
+    }
+  };
+
+  handleAdd = (event: any) => {
+    //logic to add event
   }
 
-  // pushMe = () => {
-  //   console.log(this.props.eventDetail);
-  // };
+  handleEdit = (event: any) => {
+   let url: string = `${APIURL}/events/edit/${this.props.eventDetail.id}`;
+   let reqBody = {
+     eventTitle: this.state.eventTitle,
+     eventTime: this.state.eventTime,
+     eventDate: this.state.eventDate,
+     eventLocation: this.state.eventLocation,
+   };
 
+   fetch(url, {
+     method: "PUT",
+     body: JSON.stringify(reqBody),
+     headers: new Headers({
+       "Content-type": "application/json",
+       Authorization: this.props.sessionToken,
+     }),
+   })
+     .then((res) => res.json())
+     .then((json) => {
+       console.log(json);
+       this.props.closeModal();
+     });
+  }
 
-  
+  handleDelete = (event: any) => {
+    //logic to delete event
+  }
+
+  renderNames() {
+    if (this.props.action !== "add") {
+      return (
+        <div>
+          <TextField
+            defaultValue={this.props.eventDetail.user.firstName}
+            label="First Name"
+            disabled
+          />
+          <TextField
+            defaultValue={this.props.eventDetail.user.lastName}
+            label="Last Name"
+            disabled
+          />
+        </div>
+      );
+    }
+  }
 
   render() {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <TextField onChange={this.handleChange} defaultValue={this.props.eventDetail.user.firstName} id="standard-basic" label="First Name" disabled />
-          <TextField defaultValue={this.props.eventDetail.user.lastName} id="standard-basic" label="Last Name" disabled />
-          <TextField defaultValue={this.props.eventDetail.eventTitle} onChange={(val) => {
-              console.log(val);
-              this.setState({eventTitle: val});
-              }
-           } id="standard-basic" label="Event Title"  />
-          <TextField defaultValue={this.props.eventDetail.eventTime} onChange={(val) => {
-              console.log(val);
-              this.setState({eventTime: val});
-              }} id="standard-basic" label="Event Time" />
-          <TextField defaultValue={this.props.eventDetail.eventDate} onChange={(val) => {
-              console.log(val);
-              this.setState({eventDate: val});
-              }}id="standard-basic" label="Event Date"  />
-          <TextField defaultValue={this.props.eventDetail.eventLocation} onChange={(val) => {
-              console.log(val);
-              this.setState({eventLocation: val});
-              }} id="standard-basic" label="Event Location"  />
+          {this.renderNames()}
+          <TextField
+            defaultValue={this.props.eventDetail.eventTitle}
+            onChange={(event) => {
+              this.setState({ eventTitle: event.target.value });
+            }}
+            label="Event Title"
+          />
+          <TextField
+            defaultValue={this.props.eventDetail.eventTime}
+            onChange={(event) => {
+              this.setState({ eventTime: event.target.value });
+            }}
+            label="Event Time"
+          />
+          <TextField
+            defaultValue={this.props.eventDetail.eventDate}
+            onChange={(event) => {
+              this.setState({ eventDate: event.target.value });
+            }}
+            label="Event Date"
+          />
+          <TextField
+            defaultValue={this.props.eventDetail.eventLocation}
+            onChange={(event) => {
+              this.setState({ eventLocation: event.target.value });
+            }}
+            label="Event Location"
+          />
 
-          <input type= "submit" value="submit" name="submit"/>
-     
-
+          <input type="submit" value="submit" />
         </form>
+
         {/* Put modal here
         <button onClick={this.pushMe}> test</button>
         {console.log(this.props.eventDetail)} */}

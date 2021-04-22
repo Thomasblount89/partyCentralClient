@@ -30,6 +30,7 @@ class Login extends Component<AcceptedProps, user, {}> {
   }
 
   handleSubmit(e: SyntheticEvent): void {
+
     e.preventDefault();
     let url: string = `${APIURL}/user/login`;
     let reqBody = {
@@ -49,6 +50,8 @@ class Login extends Component<AcceptedProps, user, {}> {
       .then((res) => res.json())
       .then((json) => {
         this.props.updateToken(json.token);
+        localStorage.setItem('userId', (json.user.id));
+
         this.setState({redirect: "/event"})
 
       });
