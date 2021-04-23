@@ -1,68 +1,95 @@
-import React from 'react';
-import './App.css';
+import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import  Nav from './components/Nav/NavDisplay';
-import EventsCentral from './EventsCentral';
-import EventIndex from './components/Events/EventIndex';
+import { Component } from "react";
+import { Route, Switch } from "react-router-dom";
+import Auth from "./components/Auth/Auth";
+import Events from "./components/Events/EventsIndex/EventIndex";
+import Rsvp from "./components/Events/RsvpIndex/RsvpIndex";
+import NavDisplay from "./components/Nav/NavDisplay"
 
-type Props = {
-  props: string 
+interface IState {
+  sessionToken: string| any;
+  updateToken: string | any;
+  clearToken: string| any;
 }
 
-type State = {
-  sessionToken: string|null
-  updateToken:string|null
-  clearToken:string|null
-  Nav:string|null
-  EventsCentral:string|null
-  EventIndex:string|null
-}
-
-
-class App extends React.Component<Props, State> {
-  constructor(props: Props){
-    super(props)
+class App extends Component<{}, IState> {
+  constructor(props: {}) {
+    super(props);
     this.state = {
-      sessionToken:"",
-      updateToken:"",
-      clearToken:"",
-      Nav:"",
-      EventsCentral:"",
-      EventIndex:""
-
+      sessionToken: "",
+      updateToken: "",
+      clearToken: "",
+    };
   }
-  }
-
 
   clearToken = () => {
     localStorage.clear();
-    this.setState({sessionToken: ''});
-  }
+    this.setState({ sessionToken: "" });
+  };
 
-  componentDidMount(){
-    if (localStorage.getItem('token')){
-      this.setState({sessionToken: (localStorage.getItem('token'))})
+  componentDidMount() {
+    if (localStorage.getItem("token")) {
+      this.setState({ sessionToken: localStorage.getItem("token") });
     }
   }
 
-  updateToken = (newToken: any) => {
+  updateToken = (newToken: string) => {
     console.log(newToken);
-    localStorage.setItem('token', newToken);
-    this.setState({sessionToken: newToken})
-  }
+    localStorage.setItem("token", newToken);
+    this.setState({ sessionToken: newToken });
+  };
 
-  render(){
-  return (
-    <div className="App">
-      <Nav updateToken={this.updateToken} logout={this.clearToken} token={this.state.sessionToken}/>
-      <EventsCentral updateToken={this.updateToken} logout={this.clearToken} token={this.state.sessionToken} />
-      <EventIndex updateToken={this.updateToken} logout={this.clearToken} token={this.state.sessionToken} />
+  render() {
+    return (
+      <div className="App">
 
-   
-    </div>
-  );
+        {/* <NavDisplay
+          updateToken={this.updateToken}
+          clearToken={this.clearToken}
+          sessionToken={this.state.sessionToken}
+        /> */}
+
+        <Switch>
+          <Route
+            path="/"
+            render={() => (
+              <Auth
+                updateToken={this.updateToken}
+                clearToken={this.clearToken}
+                sessionToken={this.state.sessionToken}
+        
+              />
+            )}
+            exact
+          />
+          <Route
+            path="/events"
+            render={() => (
+              <Events
+                updateToken={this.updateToken}
+                clearToken={this.clearToken}
+                sessionToken={this.state.sessionToken}
+              />
+            )}
+          />
+         
+           <Route
+            path="/rsvp"
+            render={() => (
+              <Rsvp
+                updateToken={this.updateToken}
+                clearToken={this.clearToken}
+                sessionToken={this.state.sessionToken}
+              />
+            )}
+          />
+
+        </Switch>
+
+      </div>
+    );
   }
 }
-
 
 export default App;
