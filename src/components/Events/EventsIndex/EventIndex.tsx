@@ -8,6 +8,7 @@ import ContactMailIcon from "@material-ui/icons/ContactMail";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { Button, Modal } from "react-bootstrap";
 import RsvpUpdate from "../RsvpIndex/RsvpUpdate";
+
 interface AcceptedProps {
   updateToken: (newToken: any) => void | any;
   clearToken: () => void | any;

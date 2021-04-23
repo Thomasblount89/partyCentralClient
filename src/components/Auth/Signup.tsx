@@ -56,22 +56,11 @@ class Signup extends Component<AcceptedProps, user> {
       .then((res) => res.json())
       .then((json) => {
         this.props.updateToken(json.token)
-        this.setState({redirect:"/event"})
+        this.setState({redirect:"/events"})
          
       });
   }
 
-  // handleChange(e: SyntheticEvent) {
-  //   const input = e.target as HTMLInputElement;
-  //   console.log(input.name, input.value);
-  //   this.setState((prevState: user) => {
-  //     let pick: Pick<user, keyof user> = {
-  //       ...prevState,
-  //       [input.name]: input.value,
-  //     };
-  //     return pick;
-  //   });
-  // }
 
   firstnameChange(e: any) {
     this.setState({

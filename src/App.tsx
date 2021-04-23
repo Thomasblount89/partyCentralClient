@@ -1,30 +1,17 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import NavDisplay from "./components/Nav/NavDisplay";
 import { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Auth from "./components/Auth/Auth";
 import Events from "./components/Events/EventsIndex/EventIndex";
-import User from "./components/Admin/Admin";
 import Rsvp from "./components/Events/RsvpIndex/RsvpIndex";
+import NavDisplay from "./components/Nav/NavDisplay"
 
 interface IState {
   sessionToken: string| any;
   updateToken: string | any;
   clearToken: string| any;
-
-  
-  // NavDisplay: string;
-  // Auth: string;
-  // EventIndex: string;
 }
-
-// interface eventDetails {
-//   eventTitle: any;
-//   eventTime: any;
-//   eventDate: any;
-//   eventLocation: any;
-// }
 
 class App extends Component<{}, IState> {
   constructor(props: {}) {
@@ -56,6 +43,13 @@ class App extends Component<{}, IState> {
   render() {
     return (
       <div className="App">
+
+        {/* <NavDisplay
+          updateToken={this.updateToken}
+          clearToken={this.clearToken}
+          sessionToken={this.state.sessionToken}
+        /> */}
+
         <Switch>
           <Route
             path="/"
@@ -76,20 +70,10 @@ class App extends Component<{}, IState> {
                 updateToken={this.updateToken}
                 clearToken={this.clearToken}
                 sessionToken={this.state.sessionToken}
-                
               />
             )}
           />
-          <Route
-            path="/user"
-            render={() => (
-              <User
-                updateToken={this.updateToken}
-                clearToken={this.clearToken}
-                sessionToken={this.state.sessionToken}
-              />
-            )}
-          />
+         
            <Route
             path="/rsvp"
             render={() => (
@@ -97,28 +81,12 @@ class App extends Component<{}, IState> {
                 updateToken={this.updateToken}
                 clearToken={this.clearToken}
                 sessionToken={this.state.sessionToken}
-               
               />
             )}
           />
 
-          {/* <Route path="/event" component={Events} />
-          <Route path="/user" component={User} />
-          <Route path="/rsvp" component={Rsvp} /> */}
         </Switch>
 
-        {/* <Auth
-          updateToken={this.updateToken}
-          clearToken={this.clearToken}
-          sessionToken={this.state.sessionToken}
-        /> */}
-
-        {/* {/* <EventsCentral updateToken={this.updateToken} logout={this.clearToken} token={this.state.sessionToken} /> */}
-        {/* <EventIndex
-          updateToken={this.updateToken}
-          clearToken={this.clearToken}
-          sessionToken={this.state.sessionToken}
-        /> */}
       </div>
     );
   }
