@@ -134,7 +134,7 @@ class RsvpIndex extends Component<AcceptedProps, IState> {
         </Modal.Footer>
       </Modal>
 
-      <h1>RSVP Component</h1>
+      <h1>RSVP</h1>
       
       <MaterialTable
         title="Rsvp"

@@ -29,7 +29,6 @@ const useStyles = makeStyles({
 
 const navLinks = [
   { title: `login`, path: `/login` },
-  { title: `logout`, path: `/events` }, 
   { title: `events`, path: `/events` },
   { title: `rsvp`, path: `/rsvp` },
 ];
@@ -49,8 +48,8 @@ const NavDisplay = () => {
             aria-labelledby="main navigation"
             className={classes.navDisplayFlex} // this
           >
-            <Link className={classes.linkText} to="/events">Logout{" "}</Link>
-            <Link className={classes.linkText} to="/">Login{" "}</Link>
+          
+            <Link className={classes.linkText} to="/">User{" "}</Link>
             <Link className={classes.linkText} to="/events">Event{" "}</Link>
             <Link className={classes.linkText} to="/rsvp">Rsvp{" "}</Link>
 

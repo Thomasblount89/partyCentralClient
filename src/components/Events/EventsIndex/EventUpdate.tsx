@@ -166,9 +166,6 @@ class EventUpdate extends Component<AcceptedProps, any> {
           <input type="submit" value="submit" />
         </form>
 
-        {/* Put modal here
-        <button onClick={this.pushMe}> test</button>
-        {console.log(this.props.eventDetail)} */}
       </div>
     );
   }
@@ -176,26 +173,3 @@ class EventUpdate extends Component<AcceptedProps, any> {
 
 export default EventUpdate;
 
-// componentDidUpdate(): void {
-//   let editedEvent: string =`${APIURL}/events/edit/:id`;
-
-//   fetch (editedEvent, {
-//     method: "PUT",
-// body: JSON.stringify({
-//   eventTitle:this.state.columns.field,
-//   eventTime:this.state.columns.field,
-//   eventDate:this.state.columns.field,
-//   eventLocation: this.state.columns.field
-//     }),
-//     headers: new Headers({
-//       "Content-type": "application/json",
-//       Authorization: this.props.sessionToken,
-
-//     })
-//   })
-//   .then ((res) => res.json())
-//   .then ((data) => {
-//     this.setState({eventTableData:data.events})
-//     console.log(this.state);
-//   })
-// }

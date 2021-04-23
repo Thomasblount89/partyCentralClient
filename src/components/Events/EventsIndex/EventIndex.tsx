@@ -197,7 +197,7 @@ class EventIndex extends Component<AcceptedProps, IState> {
           </Modal.Footer>
         </Modal>
 
-        <h1>Event Component</h1>
+        <h1>Events</h1>
         <Button
           variant="primary"
           size="lg"

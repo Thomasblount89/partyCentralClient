@@ -4,6 +4,7 @@ import Signup from "../Auth/Signup";
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { Button } from "react-bootstrap";
 
 interface AcceptedProps {
   updateToken: (newToken: any) => void;
@@ -14,7 +15,17 @@ interface AcceptedProps {
 export default class Auth extends Component<AcceptedProps, {}> {
   constructor(props: AcceptedProps) {
     super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  handleSubmit = (event:any) => {
+    event.preventDefault();
+    console.log(event)
+    console.log(this.props.clearToken)
+     localStorage.clear(); 
+     alert(" User logged out successfully")
+  }
+
   render() {
     return (
 
@@ -37,6 +48,19 @@ export default class Auth extends Component<AcceptedProps, {}> {
           </Paper>
         </Grid>
       </Grid>
+        
+      <br/>
+      <br/>
+      <br/>
+       
+      <Button
+          variant="primary"
+          size="lg"
+          onClick={this.handleSubmit}
+        >
+          Logout
+        </Button>
+
     </div>
     );
   }
