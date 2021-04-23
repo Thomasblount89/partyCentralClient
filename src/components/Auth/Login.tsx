@@ -51,7 +51,7 @@ class Login extends Component<AcceptedProps, user, {}> {
       .then((json) => {
         this.props.updateToken(json.token);
         localStorage.setItem('userId', (json.user.id));
-
+        localStorage.setItem('isAdmin', (json.user.role));
         this.setState({redirect: "/event"})
 
       });

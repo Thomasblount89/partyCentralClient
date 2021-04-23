@@ -11,13 +11,6 @@ interface AcceptedProps {
   action: string|any;
 }
 
-//    interface events {
-//     eventTitle:string;
-//     eventTime:string;
-//     eventDate: string;
-//     eventLocation:string
-// }
-
 class EventUpdate extends Component<AcceptedProps, any> {
   constructor(props: AcceptedProps) {
     super(props);
@@ -99,7 +92,8 @@ class EventUpdate extends Component<AcceptedProps, any> {
   }
 
   handleDelete = () => {
-    let url: string = `${APIURL}/events/delete/id/${this.props.eventDetail.id}`;
+    console.log('made it to delete handle')
+    let url: string = `${APIURL}/events/delete/${this.props.eventDetail.id}`;
  
     fetch(url, {
       method: "DELETE",
@@ -108,6 +102,7 @@ class EventUpdate extends Component<AcceptedProps, any> {
         Authorization: this.props.sessionToken,
       }),
     })
+    // console.log(`${this.props.eventDetail.role}`,)
       .then((res) => res.json())
       .then((json) => {
         console.log(json);

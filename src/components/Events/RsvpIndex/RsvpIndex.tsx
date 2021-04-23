@@ -1,90 +1,149 @@
 import { Component, SyntheticEvent } from "react";
+import MaterialTable from "material-table";
 import APIURL from '../../../helper/environment';
+import RsvpUpdate from "./RsvpUpdate";
+import EditIcon from "@material-ui/icons/Edit";
+import IconButton from "@material-ui/core/IconButton";
+import ContactMailIcon from "@material-ui/icons/ContactMail";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import { Button, Modal } from "react-bootstrap";
 
 
 interface AcceptedProps {
-  updateToken: (newToken: any) => void;
-  clearToken: () => void;
-  sessionToken: string;
+  updateToken: (newToken: any) => void| any;
+  clearToken: () => void | any;
+  sessionToken: string | any;
 }
 
-interface iUser {
-  firstName: string;
-  lastName: string;
-  fullName: string;
-  id: string;
-  key: number | null;
-}
+  interface IState {
+    // users: [];
+        isOpen: boolean;
+        rsvpDetail: {};
+        rowData: any|null;
+        columns: any|null;
+        rsvpTableData:[];
+        action: string|any;
+        isAdmin: boolean;
+  }
 
-class RsvpIndex extends Component<AcceptedProps, any> {
+class RsvpIndex extends Component<AcceptedProps, IState> {
   constructor(props: AcceptedProps) {
     super(props);
     this.state = {
-      users: [],
+      // users: [],
+      isOpen: false,
+      rsvpDetail: {},
+      rowData: "",
+      action: "",
+      isAdmin: JSON.parse(`${localStorage.getItem("isAdmin")}`),
+      columns:[
+      { title: "Event Title", field: "event.eventTitle" },
+      { title: "Dish", field: "dish" },
+      { title: "Rsvp", field: "rsvp" },
+      { title: "Attender First Name", field: "user.firstName" },
+      {
+        title: "Edit",
+        field: "internal_action",
+        // editable: false,
+        render: (rowData: any|null) =>
+          rowData && (
+            <IconButton
+              color="primary"
+              onClick={this.openModal.bind(this, rowData, "edit")}
+            >
+              <EditIcon />
+            </IconButton>
+          ),
+      },
+      {
+        title: "Delete",
+        field: "internal_action",
+        // editable: false,
+        render: (rowData: any) =>
+          rowData && (
+            <IconButton
+              disabled={!this.state.isAdmin}
+              color="secondary"
+              onClick={this.openModal.bind(this, rowData, "delete")}
+            >
+              <DeleteForeverIcon />
+            </IconButton>
+          ),
+      },      
+    ],
+    rsvpTableData: [],
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount(): void {
-    // get all users
-    let allUsers: string = `${APIURL}/events/`;
+    console.log(this.props);
+    // get all rsvps
+    let allRsvps: string = `${APIURL}/rsvp/`;
 
-    fetch(allUsers, {
+    fetch(allRsvps, {
       method: "GET",
       headers: new Headers({
         "Content-type": "application/json",
-        Authorization: this.props.sessionToken,
+        Authorization:`${localStorage.getItem("token")}`,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        this.setState({ users: data.user });
+        console.log(data);
+        this.setState({ rsvpTableData: data.rsvps });
         console.log(this.state);
       });
   }
 
-  handleSubmit(e: SyntheticEvent): void {
-    e.preventDefault();
-
-    // get all by host id?
-    let allHostsEvents: string = `${APIURL}/events/:hostId`; 
-
-    fetch(allHostsEvents, {
-      method: "GET",
-      headers: new Headers({
-        "Content-type": "application/json",
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        this.props.updateToken(json.token);
-      });
+  async openModal(rowData: any|null, action:string|any) {
+    await this.setState({
+      rsvpDetail: rowData,
+      action:action,
+      isOpen: true,
+    });
+    console.log(this.state.rsvpDetail);
+    console.log(this.state.action)
   }
-
-  handleChange(e: SyntheticEvent) {
-    const input = e.target as HTMLInputElement;
-  }
+  
+  closeModal = () =>{
+    this.setState({ isOpen: false });
+    this.componentDidMount();
+   }
 
   render() {
     return (
       <div className="RsvpIndex">
-    <h1>Rsvp Component</h1>
-
-        <select onChange={this.handleSubmit}>
-          {this.state.users.map((user: any) => (
         
-            <option key={user} value={user.id}>
-              {user.firstName}
-            </option>
-          ))}
-        </select>
+      <Modal show={this.state.isOpen} onHide={this.closeModal}>
+        <Modal.Header closeButton>{`${this.state.action} RSVP!`}</Modal.Header>
+        <Modal.Body>
+          <RsvpUpdate
+            updateToken={this.props.updateToken}
+            clearToken={this.props.clearToken}
+            sessionToken={this.props.sessionToken}
+            rsvpDetail={this.state.rsvpDetail}
+            closeModal={this.closeModal}
+            action={this.state.action}
+          />
+          
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={this.closeModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-        <h1 onClick={this.handleSubmit}></h1>
-        <button type="submit">Rsvp</button>
-      </div>
-    );
-  }
+      <h1>RSVP Component</h1>
+      
+      <MaterialTable
+        title="Rsvp"
+        data={this.state.rsvpTableData}
+        columns={this.state.columns}
+      />
+    </div>
+  );
+}
 }
 
 export default RsvpIndex;

@@ -12,7 +12,7 @@ interface IState {
   sessionToken: string| any;
   updateToken: string | any;
   clearToken: string| any;
-  eventDetail: {}| any;
+
   
   // NavDisplay: string;
   // Auth: string;
@@ -33,11 +33,6 @@ class App extends Component<{}, IState> {
       sessionToken: "",
       updateToken: "",
       clearToken: "",
-      eventDetail:{}
-      
-      // NavDisplay: "",
-      // Auth: "",
-      // EventIndex: "",
     };
   }
 
@@ -81,7 +76,7 @@ class App extends Component<{}, IState> {
                 updateToken={this.updateToken}
                 clearToken={this.clearToken}
                 sessionToken={this.state.sessionToken}
-                eventDetail={this.state.eventDetail}
+                
               />
             )}
           />
@@ -102,6 +97,7 @@ class App extends Component<{}, IState> {
                 updateToken={this.updateToken}
                 clearToken={this.clearToken}
                 sessionToken={this.state.sessionToken}
+               
               />
             )}
           />
